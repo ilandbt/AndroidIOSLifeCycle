@@ -38,8 +38,6 @@ public abstract class IOSActivity extends AppCompatActivity {
 
         loadViews(savedInstanceState);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(1, 1);
-        view.addView(new EmptyView(this), params);
     }
 
     @Override
@@ -60,6 +58,12 @@ public abstract class IOSActivity extends AppCompatActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus) {
+            viewDidAppear();
+        } else {
+
+        }
         Log.e(TAG, hasFocus + " - onWindowFocusChanged: " + System.currentTimeMillis());
 
     }
@@ -86,34 +90,4 @@ public abstract class IOSActivity extends AppCompatActivity {
 
     }
 
-    public class EmptyView extends View {
-        public final String TAG = getClass().getSimpleName();
-
-        public EmptyView(Context context) {
-            super(context);
-            init(null, 0);
-        }
-
-
-
-        private void init(AttributeSet attrs, int defStyle) {
-            Log.e(TAG, "init: " + System.currentTimeMillis());
-        }
-
-        @Override
-        protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-            super.onSizeChanged(w, h, oldw, oldh);
-            Log.e(TAG, "onSizeChanged: " + w + ", " + h );
-
-            Log.e(TAG, "onSizeChanged: " + System.currentTimeMillis());
-
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
-            Log.e(TAG, "onDraw: " + System.currentTimeMillis());
-            viewDidAppear();
-        }
-    }
 }
