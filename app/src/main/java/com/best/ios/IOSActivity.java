@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 public abstract class IOSActivity extends AppCompatActivity {
 
@@ -37,7 +38,8 @@ public abstract class IOSActivity extends AppCompatActivity {
 
         loadViews(savedInstanceState);
 
-        view.addView(new Dreidel(this));
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(1, 1);
+        view.addView(new EmptyView(this), params);
     }
 
     @Override
@@ -50,6 +52,7 @@ public abstract class IOSActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        viewWillAppear();
         Log.e(TAG, "onResume: " + System.currentTimeMillis());
 
     }
@@ -64,6 +67,7 @@ public abstract class IOSActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        viewDidDisappear();
         Log.e(TAG, "onPause: " + System.currentTimeMillis());
 
     }
@@ -82,23 +86,15 @@ public abstract class IOSActivity extends AppCompatActivity {
 
     }
 
-    public class Dreidel extends View {
+    public class EmptyView extends View {
         public final String TAG = getClass().getSimpleName();
 
-        public Dreidel(Context context) {
+        public EmptyView(Context context) {
             super(context);
             init(null, 0);
         }
 
-        public Dreidel(Context context, AttributeSet attrs) {
-            super(context, attrs);
-            init(attrs, 0);
-        }
 
-        public Dreidel(Context context, AttributeSet attrs, int defStyle) {
-            super(context, attrs, defStyle);
-            init(attrs, defStyle);
-        }
 
         private void init(AttributeSet attrs, int defStyle) {
             Log.e(TAG, "init: " + System.currentTimeMillis());
@@ -107,6 +103,8 @@ public abstract class IOSActivity extends AppCompatActivity {
         @Override
         protected void onSizeChanged(int w, int h, int oldw, int oldh) {
             super.onSizeChanged(w, h, oldw, oldh);
+            Log.e(TAG, "onSizeChanged: " + w + ", " + h );
+
             Log.e(TAG, "onSizeChanged: " + System.currentTimeMillis());
 
         }
